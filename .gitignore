@@ -1,0 +1,4 @@
+**/__pycache__
+/javascript.py.egg-info
+/dist
+.env
