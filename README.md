@@ -1,6 +1,6 @@
 # Javascript.py
 
-This module lets you use javascript like objects in python.
+This package lets you use javascript like objects in python.
 
 ## Installation
 

@@ -11,7 +11,7 @@ with open("requirements.txt", "r", encoding="utf-8") as req_file:
 setup(
     name="javascript.py",
     version=version,
-    description="This module lets you use Javascript like objects in python.",
+    description="This package lets you use Javascript like objects in python.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Swas.py",
