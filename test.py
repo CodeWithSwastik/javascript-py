@@ -1,5 +1,5 @@
-from javascript import console, Array
+from javascript import console
 
-a = Array([1, 2, 3, 3])
-b = a.flatMap(lambda x,i: [x+i])
-console.log(b)
+console.clear(0)
+console.error("Oh no! bad")
+console.warn("Don't do it lmao")
