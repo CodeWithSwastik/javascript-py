@@ -79,8 +79,8 @@ class Array(list):
         return new
 
     def flatMap(self, func):
-        # TODO
-        pass
+        new = self
+        return new.map(func).flat()
 
     def forEach(self, func):
         for i, elem in enumerate(self):
@@ -129,3 +129,81 @@ class Array(list):
         removed_element = self[-1] if self.length else None
         self = self[:-1]
         return removed_element
+
+    def push(self, *elems):
+        for elem in elems:
+            self.append(elem)
+
+        return self.length
+
+    def reduce(self, func, initialValue = None):
+        if len(self) == 0 and initialValue is None:
+            raise TypeError("Reduce of empty array with no initial value")
+
+        acc = initialValue or self[0]
+        if len(self) == 0:
+            return acc
+        curVal = 1 if acc == self[0] else 0
+        for i, elem in enumerate(self[curVal:]):
+            acc = func(*[acc, elem, i+curVal, self][:func.__code__.co_argcount])
+        return acc
+
+    def reduceRight(self,func, initialValue = None):
+        if len(self) == 0 and initialValue is None:
+            raise TypeError("Reduce of empty array with no initial value")
+
+        acc = initialValue or self[-1]
+        if len(self) == 0:
+            return acc
+        curVal = -2 if acc == self[-1] else -1
+        for i, elem in enumerate(self[curVal::-1]):
+            acc = func(*[acc, elem, self.length - i + curVal, self][:func.__code__.co_argcount])
+        return acc
+
+    def reverse(self):
+        super().reverse()
+        return self
+
+    def shift(self):
+        removed_element = self[0] if self.length else None
+        self = self[1:]
+        return removed_element        
+
+    def slice(self, start = 0, end = None):
+        if end is None:
+            end = self.length
+        return self[start:end]
+
+    def some(self, func):
+        for i, elem in enumerate(self):
+            if func(*[elem, i, self][:func.__code__.co_argcount]):
+                return True
+        return False
+
+    def sort(self, func):
+        super().sort()
+        return self
+    
+    def splice(self, start, delCount=None, *items):
+
+        deleted = Array()
+        if delCount is None or delCount > self.length - start:
+            delCount = self.length - start
+
+        for _ in range(delCount):
+            deleted.append(super().pop(start))
+
+        for i, item in enumerate(items):
+            super().insert(i+start,item)
+
+        return deleted
+
+    def toString(self):
+        return self.join()
+
+    def unshift(self, *items):
+        self = Array(items) + self
+        return self.length
+
+    def values(self):
+        return iter(self)
