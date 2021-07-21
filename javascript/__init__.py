@@ -7,4 +7,4 @@ __version__ = "1.0.0"
 from .console import Console
 console = Console()
 
-from jstypes import *
+from .jstypes import *
