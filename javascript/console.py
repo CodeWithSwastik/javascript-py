@@ -1,7 +1,10 @@
 ENDC = '\033[0m'
 class Console:
-    info = print
-    log = print
+    def log(self, *args, **kwargs):
+        print(*args, **kwargs)
+        
+    def info(self, *messages):
+        print(f"\033[1;32;40mINFO:",*messages,ENDC)
 
     def warn(self, *warnings):
         print(f"\033[1;33;40mWARNING:",*warnings,ENDC)
