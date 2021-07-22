@@ -97,14 +97,22 @@ HORIZ = "-"
 
 
 class Table:
-    def __init__(self):
+    def __init__(self, max_width = 50):
         self.rows = []
+        self.max_width = max_width
 
     def set_headers(self, names):
         self.headers = names
 
     def add_row(self, row):
-        self.rows.append(row)
+        frow = []
+        for x in row:
+            x = str(x).replace('\n','')
+            if len(x) > self.max_width:
+                frow.append(x[:self.max_width-3]+'...')
+            else:
+                frow.append(x)
+        self.rows.append(frow)
 
     @property
     def length_of_cols(self):
