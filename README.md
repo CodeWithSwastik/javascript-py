@@ -7,7 +7,7 @@ This package lets you use javascript like objects in python.
 Stable version:
 
 ```
-pip install javascript.py
+pip install javascriptpy
 ```
 
 Working version:
@@ -19,21 +19,24 @@ pip install git+https://github.com/CodeWithSwastik/javascript-py
 ## Example Usage
 
 ```python
-from javascript import console, Array
+from javascript import *
 
-array = Array([1,2,3])
-console.log(array.find(lambda x: x > 2))
+array = Array('apple', 'orange', 'cherry')
+index = Math.floor(Math.random()*array.length)
+
+console.info('Random element:',array[index])
+console.table(array)
 ```
 
-## Console 
+## Console
+
 ```py
 from javascript import console, Array
 
 console.clear()
 console.error("Syntax Error!")
 console.warn("Forgot an import!")
-array = Array(['earth', 'venus'])
-console.table(array)
+console.table(Array(['earth', 'venus']))
 ```
 
 ![image](https://user-images.githubusercontent.com/61446939/126521684-669e4dd5-4263-4c5e-9cce-9c0e097759e3.png)

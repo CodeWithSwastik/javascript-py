@@ -5,6 +5,7 @@ __copyright__ = "Copyright 2021 Swas.py"
 __version__ = "1.0.3"
 
 from .console import Console
+
 console = Console()
 
 from .jstypes import *

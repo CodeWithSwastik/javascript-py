@@ -1,6 +1,7 @@
-from javascript import console
+from javascript import *
+console.clear(0)
 
-console.clear()
-console.error("Oh no! bad")
-console.warn("Don't do it lmao")
-console.table(['apple', 'banana', 'cherry', 'oranges', 'pumpkins'])
+array = Array('apple', 'orange', 'cherry')
+index = Math.floor(Math.random()*array.length)
+console.info('Random element:',array[index])
+console.table(array)
