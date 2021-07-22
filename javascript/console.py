@@ -32,7 +32,12 @@ class Console:
         print(f"\033[1;33;40mWARNING:", *warnings, ENDC)
 
     def error(self, *errors):
-        print(f"\033[1;31;40mERROR:", *errors, ENDC)
+        for err in errors:
+            if isinstance(err, Exception):
+                error_type = err.__class__.__name__
+            else:
+                error_type = "ERROR"
+            print(f"\033[1;31;40m{error_type}:", err, ENDC)
 
     def clear(self, show_message=True):
         from os import name, system
@@ -53,6 +58,14 @@ class Console:
             table.set_headers(headers)
             for x in obj.items():
                 table.add_row(x)
+        else:
+            headers = headers or ["Attribute", "Value"]
+            table.set_headers(headers)
+            try:
+                for x in obj.__dict__.items():
+                    table.add_row(x)
+            except AttributeError:
+                table = obj
 
         print("\033[1;36;40m", table, ENDC, sep="")
 
@@ -110,10 +123,7 @@ class Table:
         for i, x in enumerate(row):
             length = self.length_of_cols
             cur = length[i]
-            a = divmod(cur - len(str(x)), 2)
-            b = a[0] + a[1]
-            a = a[0]
-            f += " " * a + str(x) + " " * b
+            f += str(x).center(cur)
             f += VERT
         return f + "\n"
 

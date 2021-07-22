@@ -1,7 +1,12 @@
 from javascript import *
 console.clear(0)
 
-array = Array('apple', 'orange', 'cherry')
-index = Math.floor(Math.random()*array.length)
-console.info('Random element:',array[index])
-console.table(array)
+class FalseDev:
+    def __init__(self):
+        self.age = 17
+        self.skills = 'Pro'
+    
+try:
+    lmao = 1/0
+except Exception as err:
+    console.error(err, verbose=True)
