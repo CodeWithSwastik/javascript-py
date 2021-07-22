@@ -7,43 +7,45 @@ import math
 
 # Value Properties
 
-Infinity = float('inf')
-NaN = float('nan')
+Infinity = float("inf")
+NaN = float("nan")
 
 # Built-in methods
+
 
 def isFinite(number):
     if number is None:
         return True
     number = float(number)
     return not (abs(number) == Infinity or number == NaN)
-    
+
+
 def isNaN(number):
     math.isnan(number)
+
 
 def parseFloat(number):
     number = str(number).strip()
     if not number:
         return NaN
-    DIGITS = '0123456789'
-    if number[0] not in DIGITS+'.+-':
+    DIGITS = "0123456789"
+    if number[0] not in DIGITS + ".+-":
         return NaN
 
-    f = ''
+    f = ""
     encountered_period = False
     encountered_e = False
     encountered_plus_or_minus = False
 
-
     for char in number:
-        if char == '.' and encountered_period:
+        if char == "." and encountered_period:
             break
-        elif char == '.':
+        elif char == ".":
             encountered_period = True
 
-        if char == 'e' and encountered_e:
+        if char == "e" and encountered_e:
             break
-        elif char == 'e':
+        elif char == "e":
             encountered_e = True
 
         if char in "+-" and encountered_plus_or_minus:
@@ -51,7 +53,7 @@ def parseFloat(number):
         else:
             encountered_plus_or_minus
 
-        if char in '0123456789e.+-':
+        if char in "0123456789e.+-":
             f += char
         else:
             break
@@ -60,11 +62,12 @@ def parseFloat(number):
     except ValueError:
         return NaN
 
-def parseInt(number, radix = None):
+
+def parseInt(number, radix=None):
     number = str(number).lower().strip()
 
     if radix is None:
-        radix = 16 if (len(number) >= 2 and number[:2] == '0x') else 10
+        radix = 16 if (len(number) >= 2 and number[:2] == "0x") else 10
     else:
         radix = int(radix)
 
@@ -72,16 +75,16 @@ def parseInt(number, radix = None):
         return NaN
 
     if radix == 16 and len(number) >= 2:
-        if number[:2] == '0x':
+        if number[:2] == "0x":
             number = number[2:]
-        elif number[:3] == '-0x':
-            number = '-' + number[3:]
-        
-    DIGITS = '0123456789abcdefghijklmnopqrstuvwxyz'[:radix]
-    if number[0] not in DIGITS+'+-':
+        elif number[:3] == "-0x":
+            number = "-" + number[3:]
+
+    DIGITS = "0123456789abcdefghijklmnopqrstuvwxyz"[:radix]
+    if number[0] not in DIGITS + "+-":
         return NaN
 
-    f = ''
+    f = ""
     encountered_plus_or_minus = False
     for char in number:
         if char in "+-" and encountered_plus_or_minus:
@@ -89,13 +92,13 @@ def parseInt(number, radix = None):
         else:
             encountered_plus_or_minus = True
 
-        if char in DIGITS+'+-':
+        if char in DIGITS + "+-":
             f += char
         else:
             break
 
     if radix is None:
-        radix = 16 if (len(f) > 2 and f[:2].lower() == '0x') else 10
+        radix = 16 if (len(f) > 2 and f[:2].lower() == "0x") else 10
     else:
         radix = int(radix)
     try:
@@ -103,14 +106,13 @@ def parseInt(number, radix = None):
     except:
         return NaN
 
+
 class Array(list):
     def __init__(self, *args, **kwargs):
         if len(args) > 1:
             super().__init__(args, **kwargs)
         else:
             super().__init__(*args, **kwargs)
-            
-        
 
     @property
     def length(self):
@@ -325,6 +327,39 @@ class Array(list):
     def values(self):
         return iter(self)
 
+
+class Map(dict):
+    def __getattr__(self, attr):
+        try:
+            return self[attr]
+        except KeyError:
+            raise AttributeError
+
+    def set(self, key, value):
+        self[key] = value
+
+    def delete(self, key):
+        del self[key]
+
+    def has(self, key):
+        return key in self
+
+    def forEach(self, func):
+        for key, value in self.items():
+            func(*[key, value])
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        self = cls.__new__(cls)
+        for key, value in data.items():
+            self[key] = value
+        return self
+
+    @property
+    def size(self):
+        return len(self)
+
+
 class Math:
     E = math.e
     LN2 = math.log(2)
@@ -332,7 +367,7 @@ class Math:
     LOG2E = math.log(math.e, 2)
     LOG10E = math.log(math.e, 10)
     PI = math.pi
-    SQRT1_2 = math.sqrt(1/2)
+    SQRT1_2 = math.sqrt(1 / 2)
     SQRT_2 = math.sqrt(2)
 
     @staticmethod
@@ -341,4 +376,4 @@ class Math:
 
     @staticmethod
     def random():
-        return __import__('random').random()
+        return __import__("random").random()
