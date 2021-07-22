@@ -161,3 +161,5 @@ class Time:
     @property
     def timeElapsed(self):
         return round((self.end - self.start) * 1000, 4)
+
+console = Console()

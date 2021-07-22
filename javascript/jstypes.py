@@ -329,14 +329,26 @@ class Array(list):
 
 
 class Map(dict):
+    def __repr__(self):
+        f = '{'
+        for k, v in self.items():
+            f += f' {k} => {v},'
+        f = f[:-1] + ' }'
+        return f'Map({self.size}) {f}'
+
     def __getattr__(self, attr):
         try:
             return self[attr]
         except KeyError:
-            raise AttributeError
+            raise None
 
+    def clear(self):
+        for key in self.keys():
+            self.delete(key)
+        
     def set(self, key, value):
         self[key] = value
+        return self
 
     def delete(self, key):
         del self[key]
@@ -359,7 +371,9 @@ class Map(dict):
     def size(self):
         return len(self)
 
-
+    def entries(self):
+        return iter([k,v] for k,v in self.items())
+    
 class Math:
     E = math.e
     LN2 = math.log(2)
