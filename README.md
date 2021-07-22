@@ -40,3 +40,9 @@ console.table(Array(['earth', 'venus']))
 ```
 
 ![image](https://user-images.githubusercontent.com/61446939/126521684-669e4dd5-4263-4c5e-9cce-9c0e097759e3.png)
+
+## What's new?
+
+- Added window methods like alert, prompt, confirm
+- Added Map Object
+- Added setTimeout, setInterval, clearTimeout, clearInterval

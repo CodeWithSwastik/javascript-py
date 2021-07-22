@@ -1,9 +1,3 @@
-from javascript import *
+from javascript.window import *
 
-
-
-
-
-
-
-alert('hi alert be like')
+alert('hello' * 10)
