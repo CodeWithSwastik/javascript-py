@@ -525,7 +525,7 @@ class Date:
 
     def toString(self):
         aware = self.date.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
-        return self.date.strftime('%a %b %d %Y %y %H:%M:%S ') + aware.strftime(f'GMT%z (%Z)')
+        return self.date.strftime('%a %b %d %Y %H:%M:%S ') + aware.strftime(f'GMT%z (%Z)')
 
     def __repr__(self):
         return self.toString()
