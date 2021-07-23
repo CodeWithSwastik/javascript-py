@@ -1,11 +1,12 @@
 from .jstypes import Array
+from os import name, system
 import time
 
 ENDC = "\033[0m"
 
 
 class Console:
-    def __init__(self):
+    def __init__(self): 
         self.timers = Array()
 
     def assert_(self, assertion, *data):
@@ -40,8 +41,6 @@ class Console:
             print(f"\033[1;31;40m{error_type}:", err, ENDC)
 
     def clear(self, show_message=True):
-        from os import name, system
-
         _ = system("cls" if name == "nt" else "clear")
         if show_message:
             print(f"\033[3;35;40mConsole was cleared", ENDC)

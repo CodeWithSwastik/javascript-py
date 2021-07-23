@@ -22,9 +22,9 @@ pip install git+https://github.com/CodeWithSwastik/javascript-py
 from javascript import *
 
 array = Array('apple', 'orange', 'cherry')
-index = Math.floor(Math.random()*array.length)
+index = Math.floor(Math.random() * array.length)
 
-console.info('Random element:',array[index])
+console.info('Random element:', array[index])
 console.table(array)
 ```
 
