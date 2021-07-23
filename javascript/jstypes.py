@@ -106,6 +106,58 @@ def parseInt(number, radix=None):
     except:
         return NaN
 
+class Object(object):
+    def __init__(self, *args, **kwargs):
+        for arg in args:
+            self.__dict__.update(arg)
+        self.__dict__.update(kwargs)
+
+    def __getitem__(self, name):
+        return self.__dict__.get(name, None)
+
+    def __setitem__(self, name, val):
+        return self.__dict__.__setitem__(name, val)
+
+    def __delitem__(self, name):
+        if self.__dict__.has_key(name):
+            del self.__dict__[name]
+
+    def __getattr__(self, name):
+        return self.__getitem__(name)
+
+    def __setattr__(self, name, val):
+        return self.__setitem__(name, val)
+
+    def __delattr__(self, name):
+        return self.__delitem__(name)
+
+    def __iter__(self):
+        return self.__dict__.__iter__()
+
+    def __repr__(self):
+        return self.__dict__.__repr__()
+
+    def __str__(self):
+        return self.__dict__.__str__()
+    
+    def __add__(self, other):
+        return self.__str__() + other.__str__()
+
+
+    def hasOwnProperty(self, prop):
+        return prop in self
+    
+    @staticmethod
+    def assign(target, *sources):
+        for source in sources:
+            for key in iter(source):
+                target[key] = source[key]
+
+        return target
+
+    @staticmethod
+    def entries(obj):
+        return iter(obj.__dict__.items())
 
 class Array(list):
     def __init__(self, *args, **kwargs):
@@ -391,3 +443,126 @@ class Math:
     @staticmethod
     def random():
         return __import__("random").random()
+
+import datetime
+
+class Date:
+    def __init__(self, date = None):
+        self.date = date or datetime.datetime.now()
+        self.utc_date = datetime.datetime.utcfromtimestamp(self.date.timestamp())
+
+    def getDate(self):
+        return self.date.day
+    
+    def getDay(self):
+        return self.date.weekday()
+
+    def getFullYear(self):
+        return self.date.year
+    
+    def getHours(self):
+        return self.date.hour
+
+    def getMilliseconds(self):
+        return Math.floor(self.date.microsecond / 1000)
+
+    def getMinutes(self):
+        return self.date.minute
+    
+    def getMonth(self):
+        return self.date.month
+    
+    def getSeconds(self):
+        return self.date.second
+
+    def getTime(self):
+        return Math.floor(self.date.timestamp() * 1000)
+    
+    def getTimezoneOffset(self):
+        seconds_offset = self.date - self.utc_date
+        return int(seconds_offset.seconds / 60)
+
+    def getUTCDate(self):
+        return self.utc_date.day
+    
+    def getUTCDay(self):
+        return self.utc_date.weekday()
+
+    def getUTCFullYear(self):
+        return self.utc_date.year
+
+    def getUTCHours(self):
+        return self.utc_date.hour
+
+    def getUTCMilliseconds(self):
+        return Math.floor(self.utc_date.microsecond / 1000)
+
+    def getUTCMinutes(self):
+        return self.utc_date.minute
+    
+    def getUTCMonth(self):
+        return self.utc_date.month
+    
+    def getUTCSeconds(self):
+        return self.utc_date.second
+
+    @staticmethod
+    def now():
+        return Date().getTime()
+
+    @staticmethod
+    def parse(dateString):
+        # TODO
+        return Date(datetime.datetime.fromisoformat(dateString)).getTime()
+
+
+class JSON:
+
+    @staticmethod
+    def parse(jsonString):
+        return __import__('json').loads(jsonString)
+
+    @staticmethod
+    def stringify(obj):
+        return __import__('json').dumps(obj)
+
+import re
+class RegExp:
+
+    def __init__(self, pattern, flags=''):
+        self.source = pattern
+        self.flags = flags.lower()
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        return f'/{self.source}/{self.flags}'
+    @property
+    def dotAll(self):
+        return 's' in self.flags
+
+    @property
+    def global_(self):
+        return 'g' in self.flags
+
+    @property
+    def hasIndices(self):
+        return 'd' in self.flags
+
+    @property
+    def ignoreCase(self):
+        return 'i' in self.flags
+
+    @property
+    def unicode(self):
+        return 'u' in self.flags
+
+    def test(self, string):
+        return bool(re.search(self.source, string))
+
+    def toString(self):
+        return self.__str__()
+
+    def exec(self, string):
+        return re.findall(self.source, string)

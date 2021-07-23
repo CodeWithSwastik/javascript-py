@@ -1,3 +1,6 @@
-from javascript.window import *
+from javascript import *
+console.clear()
 
-alert('hello' * 10)
+r = RegExp('foo*')
+console.info(r)
+console.info(r.exec('football is fooing'))    

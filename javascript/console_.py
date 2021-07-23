@@ -148,7 +148,7 @@ class Table:
         x += self.gen_sep()
         for i in range(len(self.rows)):
             x += self.gen_row(i)
-        x += self.gen_sep()
+        x += self.gen_sep()[:-1]
         return x
 
 
