@@ -106,6 +106,7 @@ def parseInt(number, radix=None):
     except:
         return NaN
 
+
 class Object(object):
     def __init__(self, *args, **kwargs):
         for arg in args:
@@ -139,14 +140,14 @@ class Object(object):
 
     def __str__(self):
         return self.__dict__.__str__()
-    
-    def __add__(self, other):
-        return self.__str__() + other.__str__()
 
+    def __add__(self, other):
+        val = other.toString() if hasattr(other, "toString") else str(other)
+        return self.toString() + val
 
     def hasOwnProperty(self, prop):
         return prop in self
-    
+
     @staticmethod
     def assign(target, *sources):
         for source in sources:
@@ -158,6 +159,10 @@ class Object(object):
     @staticmethod
     def entries(obj):
         return iter(obj.__dict__.items())
+
+    def toString(self):
+        return "[object Object]"
+
 
 class Array(list):
     def __init__(self, *args, **kwargs):
@@ -382,11 +387,11 @@ class Array(list):
 
 class Map(dict):
     def __repr__(self):
-        f = '{'
+        f = "{"
         for k, v in self.items():
-            f += f' {k} => {v},'
-        f = f[:-1] + ' }'
-        return f'Map({self.size}) {f}'
+            f += f" {k} => {v},"
+        f = f[:-1] + " }"
+        return f"Map({self.size}) {f}"
 
     def __getattr__(self, attr):
         try:
@@ -397,7 +402,7 @@ class Map(dict):
     def clear(self):
         for key in self.keys():
             self.delete(key)
-        
+
     def set(self, key, value):
         self[key] = value
         return self
@@ -424,8 +429,9 @@ class Map(dict):
         return len(self)
 
     def entries(self):
-        return iter([k,v] for k,v in self.items())
-    
+        return iter([k, v] for k, v in self.items())
+
+
 class Math:
     E = math.e
     LN2 = math.log(2)
@@ -444,22 +450,24 @@ class Math:
     def random():
         return __import__("random").random()
 
+
 import datetime
 
+
 class Date:
-    def __init__(self, date = None):
+    def __init__(self, date=None):
         self.date = date or datetime.datetime.now()
         self.utc_date = datetime.datetime.utcfromtimestamp(self.date.timestamp())
 
     def getDate(self):
         return self.date.day
-    
+
     def getDay(self):
         return self.date.weekday()
 
     def getFullYear(self):
         return self.date.year
-    
+
     def getHours(self):
         return self.date.hour
 
@@ -468,23 +476,23 @@ class Date:
 
     def getMinutes(self):
         return self.date.minute
-    
+
     def getMonth(self):
         return self.date.month
-    
+
     def getSeconds(self):
         return self.date.second
 
     def getTime(self):
         return Math.floor(self.date.timestamp() * 1000)
-    
+
     def getTimezoneOffset(self):
         seconds_offset = self.date - self.utc_date
         return int(seconds_offset.seconds / 60)
 
     def getUTCDate(self):
         return self.utc_date.day
-    
+
     def getUTCDay(self):
         return self.utc_date.weekday()
 
@@ -499,10 +507,10 @@ class Date:
 
     def getUTCMinutes(self):
         return self.utc_date.minute
-    
+
     def getUTCMonth(self):
         return self.utc_date.month
-    
+
     def getUTCSeconds(self):
         return self.utc_date.second
 
@@ -517,19 +525,20 @@ class Date:
 
 
 class JSON:
-
     @staticmethod
     def parse(jsonString):
-        return __import__('json').loads(jsonString)
+        return __import__("json").loads(jsonString)
 
     @staticmethod
     def stringify(obj):
-        return __import__('json').dumps(obj)
+        return __import__("json").dumps(obj)
+
 
 import re
-class RegExp:
 
-    def __init__(self, pattern, flags=''):
+
+class RegExp:
+    def __init__(self, pattern, flags=""):
         self.source = pattern
         self.flags = flags.lower()
 
@@ -537,26 +546,27 @@ class RegExp:
         return self.__str__()
 
     def __str__(self):
-        return f'/{self.source}/{self.flags}'
+        return f"/{self.source}/{self.flags}"
+
     @property
     def dotAll(self):
-        return 's' in self.flags
+        return "s" in self.flags
 
     @property
     def global_(self):
-        return 'g' in self.flags
+        return "g" in self.flags
 
     @property
     def hasIndices(self):
-        return 'd' in self.flags
+        return "d" in self.flags
 
     @property
     def ignoreCase(self):
-        return 'i' in self.flags
+        return "i" in self.flags
 
     @property
     def unicode(self):
-        return 'u' in self.flags
+        return "u" in self.flags
 
     def test(self, string):
         return bool(re.search(self.source, string))

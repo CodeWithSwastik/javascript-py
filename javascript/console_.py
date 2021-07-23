@@ -10,12 +10,12 @@ class Console:
 
     def assert_(self, assertion, *data):
         if not data:
-            data = ('console.assert',)
+            data = ("console.assert",)
         try:
             assert assertion
         except AssertionError:
             print(f"\033[1;31;40mAssertion failed:", *data, ENDC)
-            
+
     def log(self, *args, styles=None, **kwargs):
         if styles is None:
             print(*args, **kwargs)
@@ -97,7 +97,7 @@ HORIZ = "-"
 
 
 class Table:
-    def __init__(self, max_width = 50):
+    def __init__(self, max_width=50):
         self.rows = []
         self.max_width = max_width
 
@@ -107,9 +107,9 @@ class Table:
     def add_row(self, row):
         frow = []
         for x in row:
-            x = str(x).replace('\n','')
+            x = str(x).replace("\n", "")
             if len(x) > self.max_width:
-                frow.append(x[:self.max_width-3]+'...')
+                frow.append(x[: self.max_width - 3] + "...")
             else:
                 frow.append(x)
         self.rows.append(frow)
@@ -161,5 +161,6 @@ class Time:
     @property
     def timeElapsed(self):
         return round((self.end - self.start) * 1000, 4)
+
 
 console = Console()

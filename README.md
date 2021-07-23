@@ -43,6 +43,4 @@ console.table(Array(['earth', 'venus']))
 
 ## What's new?
 
-- Added window methods like alert, prompt, confirm
-- Added Map Object
-- Added setTimeout, setInterval, clearTimeout, clearInterval
+- Added RegExp, Date, JSON
