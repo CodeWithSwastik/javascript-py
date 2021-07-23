@@ -523,6 +523,15 @@ class Date:
         # TODO
         return Date(datetime.datetime.fromisoformat(dateString)).getTime()
 
+    def toString(self):
+        aware = self.date.replace(tzinfo=datetime.timezone.utc).astimezone(tz=None)
+        return aware.strftime(f'%a %b %d %Y %y %H:%M:%S GMT%z (%Z)')
+
+    def __repr__(self):
+        return self.toString()
+    
+    def __str__(self):
+        return self.toString()
 
 class JSON:
     @staticmethod
