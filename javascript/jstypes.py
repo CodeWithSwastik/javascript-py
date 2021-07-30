@@ -397,7 +397,7 @@ class Map(dict):
         try:
             return self[attr]
         except KeyError:
-            raise None
+            return None
 
     def clear(self):
         for key in self.keys():
